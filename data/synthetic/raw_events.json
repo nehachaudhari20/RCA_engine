@@ -5,158 +5,78 @@
     "entity_id": "service-C",
     "event_type": "latency_normal",
     "source": "monitoring",
-    "attributes": { "latency_ms": 120 }
+    "attributes": {
+      "latency_ms": 120
+    }
   },
   {
     "event_id": "e2",
     "timestamp": "2025-01-01T09:46:00Z",
     "entity_id": "service-C",
-    "event_type": "latency_normal",
+    "event_type": "latency_spike",
     "source": "monitoring",
-    "attributes": { "latency_ms": 130 }
+    "attributes": {
+      "latency_ms": 4200
+    }
   },
   {
     "event_id": "e3",
     "timestamp": "2025-01-01T09:47:00Z",
     "entity_id": "service-B",
-    "event_type": "dependency_call",
-    "source": "service",
-    "attributes": { "dependency": "service-C", "latency_ms": 140 }
+    "event_type": "dependency_timeout",
+    "source": "monitoring",
+    "attributes": {
+      "dependency": "service-C"
+    }
   },
   {
     "event_id": "e4",
     "timestamp": "2025-01-01T09:48:00Z",
-    "entity_id": "service-C",
-    "event_type": "latency_spike",
+    "entity_id": "service-A",
+    "event_type": "request_failure",
     "source": "monitoring",
-    "attributes": { "latency_ms": 4200 }
+    "attributes": {
+      "status_code": 500
+    }
   },
   {
     "event_id": "e5",
-    "timestamp": "2025-01-01T09:48:10Z",
-    "entity_id": "service-C",
-    "event_type": "latency_spike",
+    "timestamp": "2025-01-01T09:49:00Z",
+    "entity_id": "service-A",
+    "event_type": "request_failure",
     "source": "monitoring",
-    "attributes": { "latency_ms": 4600 }
+    "attributes": {
+      "status_code": 502
+    }
   },
   {
     "event_id": "e6",
-    "timestamp": "2025-01-01T09:48:30Z",
+    "timestamp": "2025-01-01T09:50:00Z",
     "entity_id": "service-B",
-    "event_type": "dependency_timeout",
-    "source": "service",
-    "attributes": { "dependency": "service-C", "timeout_ms": 3000 }
+    "event_type": "latency_spike",
+    "source": "monitoring",
+    "attributes": {
+      "latency_ms": 3800
+    }
   },
   {
     "event_id": "e7",
-    "timestamp": "2025-01-01T09:48:45Z",
-    "entity_id": "service-B",
-    "event_type": "retry_attempt",
-    "source": "service",
-    "attributes": { "retry_count": 1 }
+    "timestamp": "2025-01-01T09:51:00Z",
+    "entity_id": "service-A",
+    "event_type": "latency_spike",
+    "source": "monitoring",
+    "attributes": {
+      "latency_ms": 4100
+    }
   },
   {
     "event_id": "e8",
-    "timestamp": "2025-01-01T09:49:00Z",
-    "entity_id": "service-B",
-    "event_type": "retry_attempt",
-    "source": "service",
-    "attributes": { "retry_count": 2 }
-  },
-  {
-    "event_id": "e9",
-    "timestamp": "2025-01-01T09:49:15Z",
-    "entity_id": "service-B",
-    "event_type": "retry_attempt",
-    "source": "service",
-    "attributes": { "retry_count": 3 }
-  },
-  {
-    "event_id": "e10",
-    "timestamp": "2025-01-01T09:49:30Z",
-    "entity_id": "service-B",
-    "event_type": "error_rate_spike",
-    "source": "monitoring",
-    "attributes": { "error_rate": 0.35 }
-  },
-  {
-    "event_id": "e11",
-    "timestamp": "2025-01-01T09:49:45Z",
-    "entity_id": "service-A",
-    "event_type": "upstream_latency",
-    "source": "api",
-    "attributes": { "latency_ms": 1500 }
-  },
-  {
-    "event_id": "e12",
-    "timestamp": "2025-01-01T09:50:00Z",
-    "entity_id": "service-A",
-    "event_type": "request_failure",
-    "source": "api",
-    "attributes": { "status_code": 500 }
-  },
-  {
-    "event_id": "e13",
-    "timestamp": "2025-01-01T09:50:15Z",
-    "entity_id": "service-A",
-    "event_type": "request_failure",
-    "source": "api",
-    "attributes": { "status_code": 502 }
-  },
-  {
-    "event_id": "e14",
-    "timestamp": "2025-01-01T09:50:30Z",
-    "entity_id": "service-B",
-    "event_type": "cpu_high",
-    "source": "monitoring",
-    "attributes": { "cpu_pct": 82 }
-  },
-  {
-    "event_id": "e15",
-    "timestamp": "2025-01-01T09:50:45Z",
-    "entity_id": "service-B",
-    "event_type": "memory_high",
-    "source": "monitoring",
-    "attributes": { "memory_pct": 78 }
-  },
-  {
-    "event_id": "e16",
-    "timestamp": "2025-01-01T09:51:00Z",
-    "entity_id": "service-C",
-    "event_type": "latency_recovery",
-    "source": "monitoring",
-    "attributes": { "latency_ms": 180 }
-  },
-  {
-    "event_id": "e17",
-    "timestamp": "2025-01-01T09:51:15Z",
-    "entity_id": "service-B",
-    "event_type": "error_rate_normal",
-    "source": "monitoring",
-    "attributes": { "error_rate": 0.02 }
-  },
-  {
-    "event_id": "e18",
-    "timestamp": "2025-01-01T09:51:30Z",
-    "entity_id": "service-A",
-    "event_type": "request_success",
-    "source": "api",
-    "attributes": { "status_code": 200 }
-  },
-  {
-    "event_id": "e19",
-    "timestamp": "2025-01-01T09:51:45Z",
-    "entity_id": "service-A",
-    "event_type": "request_success",
-    "source": "api",
-    "attributes": { "status_code": 200 }
-  },
-  {
-    "event_id": "e20",
     "timestamp": "2025-01-01T09:52:00Z",
-    "entity_id": "service-C",
+    "entity_id": "service-A",
     "event_type": "latency_normal",
     "source": "monitoring",
-    "attributes": { "latency_ms": 140 }
+    "attributes": {
+      "latency_ms": 180
+    }
   }
 ]

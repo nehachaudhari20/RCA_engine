@@ -1,4 +1,5 @@
 import json
+from os import path
 import yaml
 import uuid
 from datetime import datetime
@@ -43,30 +44,46 @@ class MappingBasedAdapter(DatasetAdapter):
         with open(self.config["incident_meta_path"], "r") as f:
             return json.load(f)
 
-    def _match_condition(self, row: Dict[str, Any], condition: Dict[str, Any]) -> bool:
-        field = condition["field"]
+    def _match_condition(self, row: dict, condition: dict) -> bool:
+        field_path = condition["field"]
         op = condition["op"]
         value = condition["value"]
 
-        if field not in row:
+        field_value = self._get_nested_value(row, field_path)
+
+        if field_value is None:
             return False
 
         if op == ">":
-            return row[field] > value
+            return field_value > value
         if op == "<":
-            return row[field] < value
+            return field_value < value
         if op == "==":
-            return row[field] == value
+            return field_value == value
         if op == "contains":
-            return value in str(row[field])
+            return value in str(field_value)
 
         return False
 
-    def _extract_attributes(self, row: Dict[str, Any], rule: Dict[str, Any]) -> Dict:
+    def _extract_attributes(self, row: dict, rule: dict) -> dict:
         attrs = {}
-        for k, v in rule.get("attributes", {}).items():
-            attrs[k] = row.get(v)
+        for attr_key, field_path in rule.get("attributes", {}).items():
+            attrs[attr_key] = self._get_nested_value(row, field_path)
         return attrs
 
     def _parse_time(self, ts: str) -> datetime:
         return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    
+    def _get_nested_value(self, data: dict, path: str):
+        """
+        Safely resolve dotted paths like 'attributes.latency_ms'
+        from nested dictionaries.
+        """
+        current = data
+        for part in path.split("."):
+            if not isinstance(current, dict):
+                return None
+            current = current.get(part)
+            if current is None:
+                return None
+        return current

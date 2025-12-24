@@ -9,25 +9,25 @@ entity_field: entity_id
 
 event_mappings:
   - condition:
-      field: latency_ms
+      field: attributes.latency_ms
       op: ">"
       value: 3000
     event_type: latency_spike
     attributes:
-      latency_ms: latency_ms
+      latency_ms: attributes.latency_ms
 
   - condition:
-      field: status_code
+      field: attributes.status_code
       op: ">"
       value: 499
     event_type: request_failure
     attributes:
-      status_code: status_code
+      status_code: attributes.status_code
 
   - condition:
-      field: dependency
+      field: attributes.dependency
       op: "contains"
       value: service-C
     event_type: dependency_timeout
     attributes:
-      dependency: dependency
+      dependency: attributes.dependency

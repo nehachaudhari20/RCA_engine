@@ -2,7 +2,6 @@
   "incident_id": "incident-001",
   "title": "API failures in Service A",
   "description": "Elevated error rates and latency observed in Service A",
-  "start_time": "2025-01-01T09:48:00Z",
-  "end_time": "2025-01-01T09:52:00Z"
+  "start_time": "2025-01-01T09:45:00Z",
+  "end_time": "2025-01-01T09:55:00Z"
 }
-

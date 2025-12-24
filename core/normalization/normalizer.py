@@ -26,19 +26,30 @@ class EventNormalizer:
                     raw_event_ids=[event.event_id],
                 )
             )
+            print(f"[Normalizer] Raw event_type = {event.event_type}")
+
 
         return normalized
 
     def _map_failure_type(self, event: Event) -> str | None:
         mapping = {
+            # latency
             "latency_spike": "latency_degradation",
+
+        # dependency
             "dependency_timeout": "external_dependency_timeout",
+            "external_call_timeout": "external_dependency_timeout",
+
+        # errors
+            "request_failure": "error_rate_increase",
             "error_rate_spike": "error_rate_increase",
-            "request_failure": "upstream_failure",
+
+        # resources
             "cpu_high": "resource_pressure",
             "memory_high": "resource_pressure",
         }
         return mapping.get(event.event_type)
+
 
     def _map_severity(self, event: Event) -> str:
         if event.event_type in ["dependency_timeout", "error_rate_spike"]:

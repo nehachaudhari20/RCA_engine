@@ -9,23 +9,27 @@ class HypothesisGenerator:
         hypotheses = []
 
         for p in patterns:
+            # extract entity name from pattern description
+            # example: "Multiple failures close in time for service-A"
+            entity = p.description.split()[-1]
+
             if p.pattern_type == "temporal":
                 hypotheses.append(
                     Hypothesis(
                         hypothesis_id=str(uuid.uuid4()),
                         category="service_degradation",
-                        description="Service experienced internal degradation",
+                        description=f"Service {entity} experienced internal degradation",
                         generated_by="rules",
                         related_pattern_ids=[p.pattern_id],
                     )
                 )
 
-            if p.pattern_type == "correlation":
+            elif p.pattern_type == "correlation":
                 hypotheses.append(
                     Hypothesis(
                         hypothesis_id=str(uuid.uuid4()),
                         category="external_dependency_failure",
-                        description="Failures caused by downstream dependency",
+                        description=f"Failures caused by dependency impacting {entity}",
                         generated_by="rules",
                         related_pattern_ids=[p.pattern_id],
                     )
