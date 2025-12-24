@@ -1,9 +1,9 @@
-# 🧠 RCA Engine — A Deterministic Root Cause Analysis Framework
+# 🧠 RCA Engine — A Deterministic Root Cause Analysis Base Framework
 
-A **dataset-agnostic, deterministic Root Cause Analysis (RCA) framework** that separates **failure signals, evidence modeling, hypothesis reasoning, ranking, explanation, and learning** into clean, extensible components.
+A **dataset-agnostic, deterministic Root Cause Analysis (RCA) base framework** that separates **failure signals, evidence modeling, hypothesis reasoning, ranking, explanation, and learning** into clean, extensible components.
 
-This repository provides the **core RCA engine**, not a product or UI.
-Users integrate their own datasets via adapters without modifying the core logic.
+This framework implements the deterministic core of an RCA system.
+In industry, ML and LLMs are layered on top of such systems for anomaly detection and explanation, but the core reasoning remains rule- and evidence-driven for reliability and trust.
 
 ---
 
