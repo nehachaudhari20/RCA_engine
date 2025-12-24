@@ -27,3 +27,15 @@ class TemporalPatternDetector(PatternDetector):
                 )
 
         return patterns
+
+
+"""
+Temporal pattern detector.
+
+Detects clusters of normalized failure events occurring close together in time.
+This serves as evidence that a component is experiencing abnormal behavior
+within a short time window.
+
+Temporal patterns are treated as objective signals and later combined
+with other evidence types (correlation, dependency) during hypothesis scoring.
+"""

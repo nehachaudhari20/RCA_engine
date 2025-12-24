@@ -2,7 +2,10 @@ from adapters.base import DatasetAdapter
 from core.normalization.normalizer import EventNormalizer
 from core.pattern_detection.temporal_basic import TemporalPatternDetector
 from core.pattern_detection.correlation_basic import CorrelationPatternDetector
-from core.pattern_detection.dependency_basic import DependencyAnalyzer
+from core.hypothesis.generator import HypothesisGenerator
+from core.scoring.evidence_builder import EvidenceBuilder
+from core.scoring.weighted_scorer import WeightedScorer
+from core.ranking.ranker import Ranker
 
 
 class RCAEngine:
@@ -13,20 +16,29 @@ class RCAEngine:
             TemporalPatternDetector(),
             CorrelationPatternDetector(),
         ]
+        self.hypothesis_generator = HypothesisGenerator()
+        self.evidence_builder = EvidenceBuilder()
+        self.scorer = WeightedScorer()
+        self.ranker = Ranker()
 
     def run(self):
         events = self.adapter.load_events()
-        dependency_graph = self.adapter.load_dependency_graph()
         incident_meta = self.adapter.load_incident_meta()
 
-        normalized_events = self.normalizer.normalize(events)
+        normalized = self.normalizer.normalize(events)
 
         patterns = []
-        for detector in self.pattern_detectors:
-            patterns.extend(detector.detect(normalized_events))
+        for d in self.pattern_detectors:
+            patterns.extend(d.detect(normalized))
 
-        print(f"Incident: {incident_meta['incident_id']}")
-        print(f"Normalized events: {len(normalized_events)}")
-        print(f"Detected patterns: {len(patterns)}")
+        hypotheses = self.hypothesis_generator.generate(patterns)
+        evidences = self.evidence_builder.build(hypotheses, patterns)
+        scores = self.scorer.score(evidences)
+        ranked = self.ranker.rank(hypotheses, scores)
 
-        return normalized_events, patterns
+        print(f"\nIncident: {incident_meta['incident_id']}")
+        print("Ranked Root Causes:")
+        for rank, h, score in ranked:
+            print(f"{rank}. {h.category} | score={score}")
+
+        return ranked

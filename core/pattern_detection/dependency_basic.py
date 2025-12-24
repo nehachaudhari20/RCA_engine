@@ -23,3 +23,14 @@ class DependencyAnalyzer:
                     queue.append((nxt, dist + 1))
 
         return None
+
+"""
+Dependency proximity analyzer.
+
+Computes the structural distance between services using a dependency graph.
+This provides causal-context evidence by estimating how close a failing
+component is to the impacted entity.
+
+Dependency proximity is used as an evidence factor during hypothesis scoring,
+not as a standalone root cause signal.
+"""

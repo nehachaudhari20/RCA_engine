@@ -33,3 +33,14 @@ class CorrelationPatternDetector(PatternDetector):
                 )
 
         return patterns
+
+"""
+Correlation pattern detector.
+
+Identifies failure events that share common attributes such as dependencies
+or dimensions. Correlated failures provide evidence that multiple anomalies
+may be related to the same underlying factor.
+
+Correlation patterns are later combined with temporal and structural evidence
+to assess root cause likelihood.
+"""
