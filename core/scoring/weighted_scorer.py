@@ -3,7 +3,8 @@ from core.schemas.evidence import Evidence
 
 
 class WeightedScorer:
-    def __init__(self, weights: Dict[str, float] | None = None):
+    def __init__(self, memory_repo=None, weights=None):
+        self.memory_repo = memory_repo
         self.weights = weights or {
             "temporal": 0.4,
             "correlation": 0.3,
@@ -11,16 +12,23 @@ class WeightedScorer:
             "signal": 0.1,
         }
 
-    def score(self, evidences: List[Evidence]) -> Dict[str, float]:
+    def score(self, evidences, hypotheses):
         scores = {}
 
-        for e in evidences:
-            score = (
+        for e, h in zip(evidences, hypotheses):
+            base_score = (
                 self.weights["temporal"] * e.temporal_alignment
                 + self.weights["correlation"] * e.correlation_strength
                 + self.weights["causal"] * e.causal_proximity
                 + self.weights["signal"] * e.signal_confidence
             )
-            scores[e.hypothesis_id] = round(score, 4)
+
+            prior = (
+                self.memory_repo.get_prior_weight(h.category, h.description)
+                if self.memory_repo
+                else 1.0
+            )
+
+            scores[h.hypothesis_id] = round(base_score * prior, 4)
 
         return scores
